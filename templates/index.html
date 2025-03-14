@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+		
+		<title>Compass Starter by Ariona, Rian</title>
+
+		<!-- Loading third party fonts -->
+		<link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
+		<link href="fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!-- Loading main css file -->
+	</head>
+
+
+	<body>
+		
+		<div class="site-content">
+			<div class="site-header">
+				<div class="container">
+					<div class="mobile-navigation"></div>
+				</div>
+			</div> <!-- .site-header -->
+
+			<div class="hero" data-bg-image="{{ url_for('static', filename='images/banner.png') }}">
+				<div class="container">
+					<form action="{{ url_for('weather') }}" class="find-location" method="POST">
+						<input type="text" placeholder="Find your location..." name="location">
+						<input type="submit" value="Find">
+					</form>
+
+				</div>
+			</div>
+			{% if context %}
+
+			<div class="forecast-table">
+				<div class="container">
+					<div class="forecast-container">
+						<div class="today forecast">
+							{% for key, value in context.today.items() %}
+							<div class="forecast-header">
+								<div class="day">{{ key }} {{ context.month_abbr }}</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="location">{{context.location.title()}}</div>
+								<div class="degree">
+									<div class="num">{{ value[1][1] }}<sup>o</sup>C</div>
+								</div>
+
+								<div class="forecast-content">
+									<div class="degree">{{ value[0][1] }}<sup>o</sup>C</div>
+								</div>
+
+							</div>
+							{% endfor %}
+						</div>
+
+						{% for key, value in context.data.items() %}
+						<div class="forecast">
+							<div class="forecast-header">
+								<div class="day">{{ key }} {{ context["month_abbr"] }}</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="degree">{{ value[1][1] }}<sup>o</sup>C</div>
+								<small>{{ value[0][1] }}<sup>o</sup></small>
+							</div>
+						</div>
+						{% endfor %}
+
+					</div>
+				</div>
+			</div>
+			{% endif %}
+
+			<main class="main-content">
+				
+			</main> <!-- .main-content -->
+		</div>
+		
+	</body>
+
+</html>
